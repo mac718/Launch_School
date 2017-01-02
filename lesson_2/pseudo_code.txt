@@ -1,0 +1,85 @@
+1.
+Casual:
+
+Given two integers.
+
+Return the sum of the two integers.
+
+
+Formal:
+
+START
+
+# Given two integers
+
+return integer1 + integer2
+
+END
+
+2.
+Casual:
+
+Given and array of strings.
+
+Iterate through each string in the array.
+  - create a variable for a new string
+  - for each iteration, set the new string variable equal to itself plus the current iteration value of the original array
+
+After iterating through the array, return the value of the newly created string.
+
+Formal:
+
+START
+
+# Given an array of strings
+
+SET iterator = 1
+SET string = empty string
+
+WHILE interator < length of array 
+  SET string = string + current_string
+
+RETURN string
+
+END
+
+3. 
+Casual:
+
+Given an array of integers
+
+Iterate through each integer of the array
+  - if the index of the current integer is even
+    - delete the integer
+  -otherwise, move on to the next iteration
+
+return the array
+
+Formal:
+
+START
+
+# Given an array of integers
+
+SET iterator = 0
+
+WHILE interator < length of array - 1
+  IF iterator is even
+    delete current_number
+  ELSE
+    continue to next iteration
+
+RETURN array
+
+END
+
+
+
+
+
+
+
+
+
+
+
