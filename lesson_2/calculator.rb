@@ -7,7 +7,7 @@ def valid_number?(num)
 end
 
 def operation_to_message(op)
-  case op 
+  case op
   when '1'
     'Adding'
   when '2'
@@ -18,7 +18,6 @@ def operation_to_message(op)
     'Dividing'
   end
 end
-
 
 prompt("Welcome to calculator! Enter your name:")
 
@@ -35,7 +34,7 @@ end
 
 prompt("Hi #{name}!")
 
-loop do #main loop
+loop do # main loop
   number1 = ''
 
   loop do
@@ -46,7 +45,7 @@ loop do #main loop
       break
     else
       prompt("Hmm...that doesn't look like a valid number.")
-   end
+    end
   end
 
   number2 = ''
@@ -85,7 +84,7 @@ loop do #main loop
 
   prompt("#{operation_to_message(operator)} the two numbers...")
 
-  result = case operator
+  result =  case operator
             when '1'
               number1.to_i + number2.to_i
             when '2'
@@ -97,13 +96,10 @@ loop do #main loop
             end
 
   prompt("The result it #{result}")
-  
+
   prompt("Do you want to perform another calculation? (Y to calculate again)")
   answer = gets.chomp
   break unless answer.downcase.start_with? 'y'
-    
-  
 end
 
 prompt("Thank you for using the calculator. Good bye!")
-  
