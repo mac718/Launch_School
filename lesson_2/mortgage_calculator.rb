@@ -26,7 +26,7 @@ loop do
   monthly_interest = ''
   loop do
     apr = gets.chomp.to_f
-    if valid_number?(apr)
+    if valid_number?(apr) || apr.zero?
       monthly_interest = (apr / 100) / 12
       break
     else
@@ -46,9 +46,15 @@ loop do
     end
   end
 
-  monthly_payment = loan_amount * (monthly_interest / (1 - (monthly_interest + 1)**-loan_duration))
+  if apr > 0
+    monthly_payment = loan_amount *
+                      (monthly_interest /
+                      (1 - (monthly_interest + 1)**-loan_duration))
+  else
+    monthly_payment = loan_amount / loan_duration
+  end
 
-  prompt("Your monthly payment is: $#{monthly_payment}")
+  prompt("Your monthly payment is: $#{format('%.2f', monthly_payment)}")
 
   prompt('Do you want to perform another calculation? (Y to calculate again)')
   answer = gets.chomp
