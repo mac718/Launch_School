@@ -11,7 +11,7 @@ prompt('Please enter your name: ')
 
 name = ''
 loop do
-  name = gets.chomp
+  name = gets.chomp.strip
 
   if name.empty?
     prompt('Please enter a valid name.')
@@ -72,7 +72,9 @@ loop do
 
   prompt('Do you want to perform another calculation?
         (Y to calculate again, N to exit)')
+
   answer = gets.chomp.strip
+
   until answer.downcase.start_with?('y', 'n')
     prompt("Enter Y to calculate again or N to exit.")
     answer = gets.chomp.strip
