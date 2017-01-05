@@ -7,12 +7,26 @@ def valid_number?(num)
 end
 
 prompt('Welcome to the mortgage payment caclulator!')
+prompt('Please enter your name: ')
+
+name = ''
+loop do
+  name = gets.chomp
+
+  if name.empty?
+    prompt('Please enter a valid name.')
+  else
+    break
+  end
+end
+
+prompt("Hi #{name}!")
 
 loan_amount = ''
 loop do
   prompt('What is the total amount of the loan?')
   loop do
-    loan_amount = gets.chomp.to_f
+    loan_amount = gets.chomp.strip.to_f
     if valid_number?(loan_amount)
       break
     else
@@ -25,7 +39,7 @@ loop do
   apr = ''
   monthly_interest = ''
   loop do
-    apr = gets.chomp.to_f
+    apr = gets.chomp.strip.to_f
     if valid_number?(apr) || apr.zero?
       monthly_interest = (apr / 100) / 12
       break
@@ -38,7 +52,7 @@ loop do
 
   loan_duration = ''
   loop do
-    loan_duration = gets.chomp.to_i * 12
+    loan_duration = gets.chomp.strip.to_f * 12
     if valid_number?(loan_duration)
       break
     else
@@ -56,9 +70,19 @@ loop do
 
   prompt("Your monthly payment is: $#{format('%.2f', monthly_payment)}")
 
-  prompt('Do you want to perform another calculation? (Y to calculate again)')
-  answer = gets.chomp
-  break unless answer.downcase.start_with? 'y'
+  prompt('Do you want to perform another calculation?
+        (Y to calculate again, N to exit)')
+  answer = gets.chomp.strip
+  until answer.downcase.start_with?('y', 'n')
+    prompt("Enter Y to calculate again or N to exit.")
+    answer = gets.chomp.strip
+  end
+
+  if answer.downcase.start_with?('y')
+    next
+  elsif answer.downcase.start_with?('n')
+    break
+  end
 end
 
 prompt("Thank you for using the mortgage calculator. Good bye!")
