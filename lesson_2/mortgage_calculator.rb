@@ -75,14 +75,14 @@ loop do
 
   answer = gets.chomp.strip
 
-  until answer.downcase.start_with?('y', 'n')
+  until answer.downcase == 'y' || answer.downcase == 'n'
     prompt("Enter Y to calculate again or N to exit.")
     answer = gets.chomp.strip
   end
 
-  if answer.downcase.start_with?('y')
+  if answer.downcase == 'y'
     next
-  elsif answer.downcase.start_with?('n')
+  elsif answer.downcase == 'n'
     break
   end
 end
