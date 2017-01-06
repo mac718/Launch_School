@@ -24,7 +24,8 @@ prompt("Hi #{name}!")
 
 loan_amount = ''
 loop do
-  prompt('What is the total amount of the loan?')
+  prompt('What is the total amount of the loan?
+        (without dollar sign or commas)')
   loop do
     loan_amount = gets.chomp.strip.to_f
     if valid_number?(loan_amount)
@@ -34,7 +35,7 @@ loop do
     end
   end
 
-  prompt('What is the APR on the loan?')
+  prompt('What is the APR on the loan? (ex. for 6% enter 6)')
 
   apr = ''
   monthly_interest = ''
