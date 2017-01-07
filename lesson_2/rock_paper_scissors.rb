@@ -1,20 +1,26 @@
-VALID_CHOICES = %w(rock paper scissors spock lizard)
+VALID_CHOICES = {'r' => 'rock',
+                 'p' => 'paper',
+                 'sc' => 'scissors',
+                 'sp' => 'spock',
+                 'l' => 'lizard'}
+
+WINNING_COMBOS = {'rock' => %w(scissors sc lizard l),
+                  'r' => %w(scissors sc lizard l),
+                  'paper' => %W(rock r spock sp),
+                  'p' => %W(rock r spock sp),
+                  'scissors' => %W(paper p lizard l),
+                  's' => %W(paper p lizard l),
+                  'spock' => %W(rock r scissors sc),
+                  'sp' => %W(rock r scissors sc),
+                  'lizard' => %W(spock sp paper p),
+                  'l' => %W(spock sp paper p)}
 
 def prompt(message)
   puts("=> #{message}")
 end
 
 def win?(first, second)
-  (first == 'rock' && second == 'scissors') ||
-    (first == 'paper' && second == 'rock') ||
-    (first == 'scissors' && second == 'paper') ||
-    (first == 'rock' && second == 'lizard') ||
-    (first == 'lizard' && second == 'spock') ||
-    (first == 'spock' && second == 'scissors') ||
-    (first == 'scissors' && second == 'lizard') ||
-    (first == 'lizard' && second == 'paper') ||
-    (first == 'paper' && second == 'spock') ||
-    (first == 'spock' && second == 'rock')
+   WINNING_COMBOS[first].include?(second)
 end
 
 def display_results(player, computer)
@@ -30,17 +36,20 @@ end
 loop do
   choice = ''
   loop do
-    prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+    prompt("Choose one: (r)rock, (p) paper, (sc)scissors, (sp)spock, (l)lizard")
     choice = gets.chomp
 
-    if VALID_CHOICES.include?(choice)
+    if VALID_CHOICES.keys.include?(choice)
+      choice = VALID_CHOICES[choice]
+      break
+    elsif VALID_CHOICES.values.include?(choice)
       break
     else
       prompt("That's not a valid choice.")
     end
   end
 
-  computer_choice = VALID_CHOICES.sample
+  computer_choice = VALID_CHOICES.values.to_a.sample
 
   prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
 
