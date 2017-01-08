@@ -23,6 +23,10 @@ def win?(first, second)
   WINNING_COMBOS[first].include?(second)
 end
 
+def display_player_choices(player, computer)
+  prompt("You chose: #{player}; Computer chose: #{computer}")
+end
+
 def display_results(player, computer)
   if win?(player, computer)
     prompt("You won!")
@@ -31,6 +35,10 @@ def display_results(player, computer)
   else
     prompt("It's a tie!")
   end
+end
+
+def display_current_score(score1, score2)
+  prompt("The current score is >> You: #{score1}, Computer: #{score2}")
 end
 
 loop do
@@ -57,9 +65,11 @@ loop do
 
     computer_choice = VALID_CHOICES.values.to_a.sample
 
-    prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
+    display_player_choices(choice, computer_choice)
 
     display_results(choice, computer_choice)
+
+    display_current_score(player_wins, computer_wins)
 
     if win?(choice, computer_choice)
       player_wins += 1
