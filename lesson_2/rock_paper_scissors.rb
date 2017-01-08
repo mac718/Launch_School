@@ -44,13 +44,13 @@ end
 loop do
   player_wins = 0
   computer_wins = 0
+  prompt("Welcome to RPS! First to win 5 times wins the game!")
   while player_wins < 5 && computer_wins < 5
 
     choice = ''
 
     loop do
-      prompt("Choose one: (r)rock, (p) paper, (sc)scissors,
-            (sp)spock, (l)lizard")
+      prompt("Choose one: (r)rock, (p) paper, (sc)scissors, (sp)spock, (l)lizard")
       choice = gets.chomp
 
       if VALID_CHOICES.keys.include?(choice)
@@ -69,13 +69,13 @@ loop do
 
     display_results(choice, computer_choice)
 
-    display_current_score(player_wins, computer_wins)
-
     if win?(choice, computer_choice)
       player_wins += 1
     elsif win?(computer_choice, choice)
       computer_wins += 1
     end
+
+    display_current_score(player_wins, computer_wins)
 
   end
 
