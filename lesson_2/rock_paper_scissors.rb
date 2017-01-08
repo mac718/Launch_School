@@ -54,7 +54,8 @@ loop do
     loop do
       prompt("Choose one: (r)rock, (p) paper, (sc)scissors,
              (sp)spock, (l)lizard")
-      choice = gets.chomp
+
+      choice = gets.chomp.strip
 
       if VALID_CHOICES.keys.include?(choice)
         choice = VALID_CHOICES[choice]
@@ -89,7 +90,7 @@ loop do
   end
 
   prompt("Do you want to play again?")
-  answer = gets.chomp
+  answer = gets.chomp.strip
 
   until answer.downcase == 'y' || answer.downcase == 'n'
     prompt("Enter Y to play again or N to exit.")
