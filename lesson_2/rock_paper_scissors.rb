@@ -38,19 +38,22 @@ def display_results(player, computer)
 end
 
 def display_current_score(score1, score2)
-  prompt("The current score is >> You: #{score1}, Computer: #{score2}")
+  puts "\n"
+  prompt("The current score is >> YOU: #{score1}, COMPUTER: #{score2}")
+  puts "\n"
 end
-
 loop do
   player_wins = 0
   computer_wins = 0
-  prompt("Welcome to RPS! First to win 5 times wins the game!")
+
+  prompt("Welcome to RPSLS! First to win 5 times wins the game!")
   while player_wins < 5 && computer_wins < 5
 
     choice = ''
 
     loop do
-      prompt("Choose one: (r)rock, (p) paper, (sc)scissors, (sp)spock, (l)lizard")
+      prompt("Choose one: (r)rock, (p) paper, (sc)scissors,
+             (sp)spock, (l)lizard")
       choice = gets.chomp
 
       if VALID_CHOICES.keys.include?(choice)
@@ -80,7 +83,7 @@ loop do
   end
 
   if player_wins == 5
-    prompt("You beat computer! Awesome!") 
+    prompt("You beat computer! Awesome!")
   else
     prompt("Computer won. Bummer!")
   end
@@ -100,4 +103,4 @@ loop do
   end
 end
 
-prompt("Thank you for playing. Good bye!")
+prompt("Thank you for playing RPSLS! Good bye!")
