@@ -5,22 +5,21 @@ VALID_CHOICES = { 'r' => 'rock',
                   'l' => 'lizard' }
 
 WINNING_COMBOS = { 'rock' => %w(scissors sc lizard l),
-                   'r' => %w(scissors sc lizard l),
                    'paper' => %w(rock r spock sp),
-                   'p' => %w(rock r spock sp),
                    'scissors' => %w(paper p lizard l),
-                   's' => %w(paper p lizard l),
                    'spock' => %w(rock r scissors sc),
-                   'sp' => %w(rock r scissors sc),
-                   'lizard' => %w(spock sp paper p),
-                   'l' => %w(spock sp paper p) }
+                   'lizard' => %w(spock sp paper p) }
 
 def prompt(message)
   puts("=> #{message}")
 end
 
 def win?(first, second)
-  WINNING_COMBOS[first].include?(second)
+  if WINNING_COMBOS.keys.include?(first)
+    WINNING_COMBOS[first].include?(second)
+  else
+    WINNING_COMBOS[VALID_CHOICES[first]].include?(second)
+  end
 end
 
 def display_player_choices(player, computer)
@@ -37,9 +36,9 @@ def display_results(player, computer)
   end
 end
 
-def display_current_score(score1, score2)
+def display_current_score(player, computer)
   puts "\n"
-  prompt("The current score is >> YOU: #{score1}, COMPUTER: #{score2}")
+  prompt("The current score is >> YOU: #{player}, COMPUTER: #{computer}")
   puts "\n"
 end
 loop do
@@ -67,7 +66,7 @@ loop do
       end
     end
 
-    computer_choice = VALID_CHOICES.values.to_a.sample
+    computer_choice = VALID_CHOICES.values.sample
 
     display_player_choices(choice, computer_choice)
 
@@ -97,11 +96,7 @@ loop do
     answer = gets.chomp.strip
   end
 
-  if answer.downcase == 'y'
-    next
-  elsif answer.downcase == 'n'
-    break
-  end
+  break if answer.downcase == 'n'
 end
 
 prompt("Thank you for playing RPSLS! Good bye!")
