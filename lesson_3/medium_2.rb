@@ -63,3 +63,10 @@
 #ugh ohhhhh
 #ugh ohhhhh
 #ugh ohhhhh
+
+#Question 3
+#My string looks like this now: pumpkins
+#My array looks like this now: ["pumpkins", "rutabaga"]
+
+#The '+=' apllied to the string is just a reassignment to a new object that stays within the scope of the method; the caller object itself is not mutated.
+#Hoowever, the "<<" method mutates that caller object rather than reassining it to a new value, so the change is permanent.
