@@ -70,3 +70,12 @@
 
 #The '+=' apllied to the string is just a reassignment to a new object that stays within the scope of the method; the caller object itself is not mutated.
 #Hoowever, the "<<" method mutates that caller object rather than reassining it to a new value, so the change is permanent.
+
+#Question 4
+#My string looks like this now: pumpkinsrutabaga
+#My array looks like this now: ["pumpkins"}
+
+#Questtion 5
+def color_valid(color)
+  color == "blue" || color == "green"
+end
