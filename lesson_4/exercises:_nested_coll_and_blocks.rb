@@ -105,3 +105,23 @@ arr.select do |hash|
     end
   end
 end
+
+#Exercise 12
+arr = [['stars', 'river'], 'letter', ['leaves', ['horses', 'table']]]
+
+arr.each_with_object([]) do |elem, array|
+  if elem.size >= 5
+    array << elem
+  else
+    elem.each do |word|
+      if word.size >= 5
+        array << word
+      else
+        word.each do |inner_word|
+          array << inner_word
+        end
+      end
+    end
+  end
+end
+  
