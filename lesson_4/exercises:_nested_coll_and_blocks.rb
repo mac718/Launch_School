@@ -49,3 +49,48 @@ end
   end
  incremented_hash
 end
+
+#Exercise 7
+arr = [[2], [3, 5, 7], [9], [11, 13, 15]]
+
+arr.map do |array|
+  array.select do |num|
+    num % 3 == 0
+  end
+end
+
+#Exercise 8
+container_hash = {}
+arr.each do |sub_arr|
+  container_hash[sub_arr[0]] = sub_arr[1]
+end
+container_hash
+
+#Exercise 9
+arr = [[1, 6, 7], [1, 4, 9], [1, 8, 3]]
+
+arr.sort_by do |sub_arr|
+  sub_arr.select do |num|
+    num.odd? 
+  end
+end
+
+#Exercise 10
+hsh = {
+  'grape' => {type: 'fruit', colors: ['red', 'green'], size: 'small'},
+  'carrot' => {type: 'vegetable', colors: ['orange'], size: 'medium'},
+  'apple' => {type: 'fruit', colors: ['red', 'green'], size: 'medium'},
+  'apricot' => {type: 'fruit', colors: ['orange'], size: 'medium'},
+  'marrow' => {type: 'vegetable', colors: ['green'], size: 'large'},
+}
+
+
+hsh.map do |key, value|
+  if value[:type] == 'fruit'
+    value[:colors].map do |v|
+      v.capitalize
+    end
+  elsif value[:type] == 'vegetable'
+    value[:size].upcase
+  end
+end
