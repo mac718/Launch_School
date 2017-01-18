@@ -94,3 +94,14 @@ hsh.map do |key, value|
     value[:size].upcase
   end
 end
+
+#Exercise 11
+arr = [{a: [1, 2, 3]}, {b: [2, 4, 6], c: [3, 6], d: [4]}, {e: [8], f: [6, 10]}]
+
+arr.select do |hash|
+  hash.all? do |_, values|
+    values.all? do |num|
+      num.even?
+    end
+  end
+end
