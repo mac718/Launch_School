@@ -81,7 +81,7 @@ end
 #Exercise 9
 words.split(' ').map{|word| word.capitalize}.join(' ')
 
-#Exercise 9
+#Exercise 10
 munsters = {
   "Herman" => { "age" => 32, "gender" => "male" },
   "Lily" => { "age" => 30, "gender" => "female" },
@@ -101,3 +101,30 @@ munsters.values.each do |person, info|
   end 
 end
 munsters
+
+#Exercise 11
+total_age = 0 
+munsters.each do |name, info|
+  total_age += info["age"]  if info["gender"] == "male"
+end 
+total_age
+
+#Exercise 12
+munsters.each do |name, info|
+  puts "#{name} is a #{info["age"]} year old #{info["gender"]}"
+end 
+
+#Exercise 13
+def uuid
+  configuation = [8, 4, 4, 4, 12]
+  character_set = (0..9).to_s.to_a + ('a'..'f').to_a
+  uuid = ''
+  
+  configuation.each do |number|
+    uuid += number.times {print character_set.sample}
+    uuid += '-'unless number == 12
+  end
+  uuid
+end
+
+uuid
