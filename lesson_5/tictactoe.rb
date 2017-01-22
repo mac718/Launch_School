@@ -2,10 +2,10 @@ require 'pry'
 
 WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # cols
-                [[1, 5, 9], [3, 5, 7]]              # diagonals
-INITIAL_MARKER = " "
-PLAYER_MARKER = "X"
-COMPUTER_MARKER = "O"
+                [[1, 5, 9], [3, 5, 7]].freeze       # diagonals
+INITIAL_MARKER = " ".freeze
+PLAYER_MARKER = "X".freeze
+COMPUTER_MARKER = "O".freeze
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -39,10 +39,21 @@ def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
+def joinor(arr, final_conjunction = 'or', delimiter = ', ')
+  case arr.size
+  when 0 then ''
+  when 1 then arr[0]
+  when 2 then "#{arr[0]} #{final_conjunction} #{arr[1]}"
+  else
+    arr[-1] = "#{final_conjunction} #{arr[-1]}"
+    arr.join(delimiter)
+  end
+end
+
 def player_place_piece!(brd)
   square = ''
   loop do
-    prompt "Choose a square #{empty_squares(brd).join(',')}:"
+    prompt "Choose a square #{joinor(empty_squares(brd))}:"
     square = gets.chomp.to_i
     if empty_squares(brd).include?(square)
       break
