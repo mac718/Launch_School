@@ -88,6 +88,9 @@ def detect_winner(brd)
   nil
 end
 
+player_wins = 0
+computer_wins = 0
+
 loop do
   board = initialize_board
 
@@ -104,14 +107,27 @@ loop do
   display_board(board)
 
   if someone_won?(board)
+    if detect_winner(board) == 'Player'
+      player_wins += 1
+    elsif detect_winner(board) == 'Computer'
+      computer_wins += 1
+    end
     prompt "#{detect_winner(board)} won!"
   else
     prompt "it's a tie"
   end
 
+  break if player_wins == 5 || computer_wins == 5
+
   prompt "Play again? (y or n)"
   answer = gets.chomp
   break unless answer.downcase.start_with? "y"
+end
+
+if player_wins == 5
+  prompt "Player wins!"
+else
+  prompt "Computer wins!"
 end
 
 prompt "Thanks for playing tic tac toe!"
