@@ -6,6 +6,7 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
 INITIAL_MARKER = " ".freeze
 PLAYER_MARKER = "X".freeze
 COMPUTER_MARKER = "O".freeze
+GOES_FIRST = "player"
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -50,7 +51,7 @@ def joinor(arr, final_conjunction = 'or', delimiter = ', ')
   end
 end
 
-def player_place_piece!(brd)
+def player_places_piece!(brd)
   square = ''
   loop do
     prompt "Choose a square #{joinor(empty_squares(brd))}:"
@@ -80,15 +81,22 @@ def find_winning_square(line, board)
   end
 end
 
-def computer_places_piece(brd)
+def computer_places_piece!(brd)
   square = nil
   WINNING_LINES.each do |line|
     square = find_at_risk_square(line, brd, COMPUTER_MARKER)
     break if square
-    square = find_at_risk_square(line, brd, PLAYER_MARKER)
-    break if square
-    square = find_winning_square(line, brd)
-    break if square
+  end
+    
+  if !square
+    WINNING_LINES.each do |line|
+      square = find_at_risk_square(line, brd, PLAYER_MARKER)
+      break if square
+    end
+  end
+
+  if !square && (brd[5] != PLAYER_MARKER && brd[5] != COMPUTER_MARKER)
+    square = 5
   end
 
   if !square
@@ -117,21 +125,45 @@ def detect_winner(brd)
   nil
 end
 
+def player_moves_first?
+  if GOES_FIRST == 'player'
+    true
+  else
+    false
+  end
+end    
+
+def play_game(brd)
+  if player_moves_first?
+    loop do
+      display_board(brd)
+
+      player_places_piece!(brd)
+      break if someone_won?(brd) || board_full?(brd)
+
+      computer_places_piece!(brd)
+      break if someone_won?(brd) || board_full?(brd)
+    end
+  else
+    loop do 
+      computer_places_piece!(brd)
+      break if someone_won?(brd) || board_full?(brd)
+      
+      display_board(brd)
+
+      player_places_piece!(brd)
+      break if someone_won?(brd) || board_full?(brd)
+    end
+  end
+end
+
 player_wins = 0
 computer_wins = 0
 
 loop do
   board = initialize_board
-
-  loop do
-    display_board(board)
-
-    player_place_piece!(board)
-    break if someone_won?(board) || board_full?(board)
-
-    computer_places_piece(board)
-    break if someone_won?(board) || board_full?(board)
-  end
+  
+  play_game(board)
 
   display_board(board)
 
