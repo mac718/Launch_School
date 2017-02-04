@@ -6,7 +6,7 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
 INITIAL_MARKER = " ".freeze
 PLAYER_MARKER = "X".freeze
 COMPUTER_MARKER = "O".freeze
-GOES_FIRST = "player"
+GOES_FIRST = "chooe"
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -133,27 +133,65 @@ def player_moves_first?
   end
 end    
 
+def choose_who_goes_first(brd)
+  prompt "Who do you want to make the first move? (Computer/Me)"
+  answer = gets.chomp.strip
+  loop do 
+    if answer.downcase == 'me'
+      loop do
+        display_board(brd)
+
+        player_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+
+        computer_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+      end
+      break
+    elsif answer.downcase == 'computer'
+      loop do 
+
+        computer_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+        display_board(brd)
+
+        player_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+      end
+      break
+    else
+      prompt "Sorry, that's not a valid entry. Try again."
+      answer = gets.chomp.strip
+    end
+  end
+    
+end
+
+
 def play_game(brd)
-  if player_moves_first?
+  case GOES_FIRST
+  when 'player'
     loop do
-      display_board(brd)
+       display_board(brd)
 
       player_places_piece!(brd)
       break if someone_won?(brd) || board_full?(brd)
 
       computer_places_piece!(brd)
+      break if someone_won?(brd) || board_full?(brd)
+    end
+  when 'computer'
+    loop do 
+
+      computer_places_piece!(brd)
+      break if someone_won?(brd) || board_full?(brd)
+      display_board(brd)
+
+      player_places_piece!(brd)
       break if someone_won?(brd) || board_full?(brd)
     end
   else
-    loop do 
-      computer_places_piece!(brd)
-      break if someone_won?(brd) || board_full?(brd)
-      
-      display_board(brd)
-
-      player_places_piece!(brd)
-      break if someone_won?(brd) || board_full?(brd)
-    end
+    choose_who_goes_first(brd)
   end
 end
 
