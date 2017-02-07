@@ -123,47 +123,20 @@ def detect_winner(brd)
     end
   end
   nil
-end
-
-def player_moves_first?
-  if GOES_FIRST == 'player'
-    true
-  else
-    false
-  end
-end    
+end  
 
 def choose_who_goes_first(brd)
   prompt "Who do you want to make the first move? (Computer/Me)"
   answer = gets.chomp.strip
-  loop do 
-    if answer.downcase == 'me'
-      loop do
-        display_board(brd)
-
-        player_places_piece!(brd)
-        break if someone_won?(brd) || board_full?(brd)
-
-        computer_places_piece!(brd)
-        break if someone_won?(brd) || board_full?(brd)
-      end
-      break
-    elsif answer.downcase == 'computer'
-      loop do 
-
-        computer_places_piece!(brd)
-        break if someone_won?(brd) || board_full?(brd)
-        display_board(brd)
-
-        player_places_piece!(brd)
-        break if someone_won?(brd) || board_full?(brd)
-      end
-      break
-    else
+  if !['computer', 'me'].include?(answer.downcase)
+    loop do
       prompt "Sorry, that's not a valid entry. Try again."
       answer = gets.chomp.strip
+      break if ['computer', 'me'].include?(answer.downcase)
     end
   end
+    answer.downcase
+end
     
 end
 
@@ -172,7 +145,7 @@ def play_game(brd)
   case GOES_FIRST
   when 'player'
     loop do
-       display_board(brd)
+      display_board(brd)
 
       player_places_piece!(brd)
       break if someone_won?(brd) || board_full?(brd)
@@ -182,7 +155,6 @@ def play_game(brd)
     end
   when 'computer'
     loop do 
-
       computer_places_piece!(brd)
       break if someone_won?(brd) || board_full?(brd)
       display_board(brd)
@@ -191,7 +163,27 @@ def play_game(brd)
       break if someone_won?(brd) || board_full?(brd)
     end
   else
-    choose_who_goes_first(brd)
+    if choose_who_goes_first == 'me'
+      loop do
+        display_board(brd)
+
+        player_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+
+        computer_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+      end
+    else
+      loop do 
+        computer_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+        
+        display_board(brd)
+
+        player_places_piece!(brd)
+        break if someone_won?(brd) || board_full?(brd)
+      end
+    end
   end
 end
 
