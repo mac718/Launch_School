@@ -6,7 +6,7 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
 INITIAL_MARKER = " ".freeze
 PLAYER_MARKER = "X".freeze
 COMPUTER_MARKER = "O".freeze
-GOES_FIRST = "chooe"
+GOES_FIRST = "chooe".freeze
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -67,15 +67,15 @@ end
 
 def find_at_risk_square(line, board, marker)
   if board.values_at(*line).count(marker) == 2
-    board.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+    board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
   else
     nil
   end
 end
 
 def find_winning_square(line, board)
- if board.values_at(*line).count(COMPUTER_MARKER) == 2
-    board.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+  if board.values_at(*line).count(COMPUTER_MARKER) == 2
+    board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
   else
     nil
   end
@@ -87,7 +87,7 @@ def computer_places_piece!(brd)
     square = find_at_risk_square(line, brd, COMPUTER_MARKER)
     break if square
   end
-    
+  
   if !square
     WINNING_LINES.each do |line|
       square = find_at_risk_square(line, brd, PLAYER_MARKER)
@@ -123,7 +123,7 @@ def detect_winner(brd)
     end
   end
   nil
-end  
+end
 
 def who_goes_first
   if GOES_FIRST == 'Player' || GOES_FIRST == 'Computer'
@@ -139,7 +139,7 @@ def who_goes_first
       end
     end
   end
-    answer.downcase    
+  answer.downcase
 end
 
 def place_piece!(brd, current_player)
@@ -152,15 +152,15 @@ end
 
 def alternate_player(current_player)
   if current_player == 'player'
-    current_player = 'computer'
+    'computer'
   else
-    current_player = 'player'
+    'player'
   end
 end
 
 def play_game(brd)
   current_player = who_goes_first
-  loop do 
+  loop do
     display_board(brd)
     place_piece!(brd, current_player)
     current_player = alternate_player(current_player)
@@ -173,7 +173,7 @@ computer_wins = 0
 
 loop do
   board = initialize_board
-  
+
   play_game(board)
 
   display_board(board)
