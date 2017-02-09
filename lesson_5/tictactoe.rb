@@ -6,7 +6,7 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
 INITIAL_MARKER = " ".freeze
 PLAYER_MARKER = "X".freeze
 COMPUTER_MARKER = "O".freeze
-GOES_FIRST = "chooe".freeze
+GOES_FIRST = "choose".freeze
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -68,16 +68,12 @@ end
 def find_at_risk_square(line, board, marker)
   if board.values_at(*line).count(marker) == 2
     board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
-  else
-    nil
   end
 end
 
 def find_winning_square(line, board)
   if board.values_at(*line).count(COMPUTER_MARKER) == 2
     board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
-  else
-    nil
   end
 end
 
@@ -87,7 +83,7 @@ def computer_places_piece!(brd)
     square = find_at_risk_square(line, brd, COMPUTER_MARKER)
     break if square
   end
-  
+
   if !square
     WINNING_LINES.each do |line|
       square = find_at_risk_square(line, brd, PLAYER_MARKER)
@@ -95,7 +91,7 @@ def computer_places_piece!(brd)
     end
   end
 
-  if !square && (brd[5] != PLAYER_MARKER && brd[5] != COMPUTER_MARKER)
+  if !square && (brd[5] != INITIAL_MARKER)
     square = 5
   end
 
@@ -126,10 +122,10 @@ def detect_winner(brd)
 end
 
 def who_goes_first
-  if GOES_FIRST == 'Player' || GOES_FIRST == 'Computer'
+  if GOES_FIRST == 'player' || GOES_FIRST == 'computer'
     answer = GOES_FIRST.downcase
   else
-    prompt "Who do you want to make the first move? (Player/Computer)"
+    prompt "Choose who goes first. (Player/Computer)"
     answer = gets.chomp.strip.downcase
     if !['computer', 'player'].include?(answer)
       loop do
@@ -171,6 +167,8 @@ end
 player_wins = 0
 computer_wins = 0
 
+prompt "Welcome to Tic Tac Toe!"
+
 loop do
   board = initialize_board
 
@@ -192,8 +190,13 @@ loop do
   break if player_wins == 5 || computer_wins == 5
 
   prompt "Play again? (y or n)"
-  answer = gets.chomp
-  break unless answer.downcase.start_with? "y"
+  answer = gets.chomp.strip
+  until ['y', 'n'].include?(answer.downcase)
+    prompt("Enter Y to play again or N to exit.")
+    answer = gets.chomp.strip
+  end
+
+  break if answer.downcase == 'n'
 end
 
 if player_wins == 5
@@ -202,4 +205,4 @@ elsif computer_wins == 5
   prompt "Computer wins!"
 end
 
-prompt "Thanks for playing tic tac toe!"
+prompt "Thanks for playing Tic Tac Toe!"
