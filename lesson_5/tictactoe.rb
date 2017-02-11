@@ -118,7 +118,7 @@ def detect_winner(brd)
 end
 
 def who_goes_first
-   if GOES_FIRST == 'Player' || GOES_FIRST == 'Computer'
+  if GOES_FIRST == 'Player' || GOES_FIRST == 'Computer'
     answer = GOES_FIRST.downcase
   else
     prompt "Who do you want to make the first move? (Player(p)/Computer(c))"
@@ -130,14 +130,12 @@ def who_goes_first
         break if ['computer', 'player', 'p', 'c'].include?(answer)
       end
     end
-    answer = 'player' if answer.downcase == 'p'
-    answer = 'computer' if answer.downcase == 'c'
   end
-    answer.downcase
+  answer.downcase
 end
 
 def place_piece!(brd, current_player)
-  if current_player == 'player'
+  if current_player.start_with?('p')
     player_places_piece!(brd)
   else
     computer_places_piece!(brd)
@@ -145,7 +143,7 @@ def place_piece!(brd, current_player)
 end
 
 def alternate_player(current_player)
-  if current_player == 'player'
+  if current_player.start_with?('p')
     'computer'
   else
     'player'
