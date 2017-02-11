@@ -118,20 +118,22 @@ def detect_winner(brd)
 end
 
 def who_goes_first
-  if GOES_FIRST == 'player' || GOES_FIRST == 'computer'
+   if GOES_FIRST == 'Player' || GOES_FIRST == 'Computer'
     answer = GOES_FIRST.downcase
   else
-    prompt "Choose who goes first: (Player/Computer)"
+    prompt "Who do you want to make the first move? (Player(p)/Computer(c))"
     answer = gets.chomp.strip.downcase
-    if !['computer', 'player'].include?(answer)
+    if !['computer', 'player', 'p', 'c'].include?(answer)
       loop do
         prompt "Sorry, that's not a valid entry. Try again."
         answer = gets.chomp.strip
-        break if ['computer', 'player'].include?(answer)
+        break if ['computer', 'player', 'p', 'c'].include?(answer)
       end
     end
+    answer = 'player' if answer.downcase == 'p'
+    answer = 'computer' if answer.downcase == 'c'
   end
-  answer.downcase
+    answer.downcase
 end
 
 def place_piece!(brd, current_player)
