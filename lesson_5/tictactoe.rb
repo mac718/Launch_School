@@ -91,7 +91,7 @@ def computer_places_piece!(brd)
     end
   end
 
-  if !square && (brd[5] != INITIAL_MARKER)
+  if !square && (brd[5] == INITIAL_MARKER)
     square = 5
   end
 
@@ -125,7 +125,7 @@ def who_goes_first
   if GOES_FIRST == 'player' || GOES_FIRST == 'computer'
     answer = GOES_FIRST.downcase
   else
-    prompt "Choose who goes first. (Player/Computer)"
+    prompt "Choose who goes first: (Player/Computer)"
     answer = gets.chomp.strip.downcase
     if !['computer', 'player'].include?(answer)
       loop do
