@@ -15,19 +15,19 @@ end
 def display_board(brd)
   system 'clear'
   prompt "You're #{PLAYER_MARKER}, computer is #{COMPUTER_MARKER}"
-  puts ""
-  puts "     |     |"
-  puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
-  puts "     |     |"
-  puts "-----+-----+-----"
-  puts "     |     |"
-  puts "  #{brd[4]}  |  #{brd[5]}  |  #{brd[6]}"
-  puts "     |     |"
-  puts "-----+-----+-----"
-  puts "     |     |"
-  puts "  #{brd[7]}  |  #{brd[8]}  |  #{brd[9]}"
-  puts "     |     |"
-  puts ""
+  puts "",
+       "     |     |",
+       "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}",
+       "     |     |",
+       "-----+-----+-----",
+       "     |     |",
+       "  #{brd[4]}  |  #{brd[5]}  |  #{brd[6]}",
+       "     |     |",
+       "-----+-----+-----",
+       "     |     |",
+       "  #{brd[7]}  |  #{brd[8]}  |  #{brd[9]}",
+       "     |     |",
+       ""
 end
 
 def initialize_board
@@ -77,27 +77,23 @@ def find_winning_square(line, board)
   end
 end
 
-def computer_places_piece!(brd)
+def evaluate_lines(brd, marker)
   square = nil
   WINNING_LINES.each do |line|
-    square = find_at_risk_square(line, brd, COMPUTER_MARKER)
+    square = find_at_risk_square(line, brd, marker)
     break if square
   end
+  square
+end
 
-  if !square
-    WINNING_LINES.each do |line|
-      square = find_at_risk_square(line, brd, PLAYER_MARKER)
-      break if square
-    end
-  end
+def computer_places_piece!(brd)
+  square = evaluate_lines(brd, COMPUTER_MARKER)
 
-  if !square && (brd[5] == INITIAL_MARKER)
-    square = 5
-  end
+  square = evaluate_lines(brd, PLAYER_MARKER) if !square
 
-  if !square
-    square = empty_squares(brd).sample
-  end
+  square = 5 if !square && (brd[5] == INITIAL_MARKER)
+
+  square = empty_squares(brd).sample if !square
 
   brd[square] = COMPUTER_MARKER
 end
