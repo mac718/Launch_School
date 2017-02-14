@@ -1,12 +1,8 @@
+require 'pry'
+
 SUITS = ['C', 'S', 'H', 'D'].freeze
 CARDS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'].freeze
 FACECARD = 10
-
-
-
-def prompt(msg)
-  puts "=> #{msg}"
-end
 
 def initialize_deck
   deck = []
@@ -56,6 +52,17 @@ def hit(deck)
   card
 end
 
+def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+  if player_total > dealer_total && !busted?(player_hand)
+    puts "You won!"
+  elsif busted?(dealer_hand)
+    puts "You won!"
+  else 
+    puts "Dealer won!"
+  end
+end
+      
+
 player_hand = []
 dealer_hand = []
 
@@ -76,10 +83,28 @@ loop do
   player_hand << hit(deck)
 end
 
-puts total(player_hand).to_s
-puts total(dealer_hand).to_s
+player_total = total(player_hand)
+
+if busted?(player_hand)
+  puts "You busted! Dealer wins!"
+else
+  puts "You're staying put!"
+end
+#binding.pry
+loop do 
+  break if total(dealer_hand) >= 17 || busted?(dealer_hand) 
+  dealer_hand << hit(deck)
+end
+
+dealer_total = total(dealer_hand)
+
+puts "Your total: #{player_total}"
+puts "Dealer's total: #{dealer_total}"
+
+determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
 
 puts player_hand.inspect
+puts dealer_hand.inspect
 
 
 
