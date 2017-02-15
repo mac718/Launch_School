@@ -81,6 +81,8 @@ loop do
   answer = gets.chomp.strip
   break if answer == 'stay' || busted?(player_hand) 
   player_hand << hit(deck)
+  puts "New Card: #{player_hand.last[1]}"
+  puts "Current total: #{total(player_hand)}"
 end
 
 player_total = total(player_hand)
@@ -88,12 +90,14 @@ player_total = total(player_hand)
 if busted?(player_hand)
   puts "You busted! Dealer wins!"
 else
-  puts "You're staying put!"
+  puts "You're staying put! Dealer's turn:"
 end
 #binding.pry
 loop do 
   break if total(dealer_hand) >= 17 || busted?(dealer_hand) 
   dealer_hand << hit(deck)
+   puts "New Card: #{dealer_hand.last[1]}"
+  puts "Current total: #{total(dealer_hand)}"
 end
 
 dealer_total = total(dealer_hand)
