@@ -6,7 +6,7 @@ FACECARD = 10
 
 def initialize_deck
   deck = []
-  
+
   SUITS.each do |suit|
     CARDS.each do |card|
       deck << [suit, card]
@@ -16,8 +16,18 @@ def initialize_deck
 end
 
 def deal_cards(player_hand, dealer_hand, deck)
-  2.times {player_hand << hit(deck)}
-  2.times {dealer_hand << hit(deck)}
+  2.times { player_hand << hit(deck) }
+  2.times { dealer_hand << hit(deck) }
+end
+
+def ace_equals_one(hand)
+  count = 0
+  hand.each do |card|
+    if card.include?('Ace')
+      count += 1
+    end
+  end
+  count
 end
 
 def total(hand)
@@ -33,12 +43,8 @@ def total(hand)
   end
   count = 0
   if total > 21
-      hand.each do |card|
-        if card.include?('Ace')
-          count += 1
-        end
-      end
-    end
+    count = ace_equals_one(hand)
+  end
   total - (count * 10)
 end
 
@@ -54,18 +60,16 @@ end
 
 def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
   if player_total > dealer_total && !busted?(player_hand)
-    puts "You won!"
+    puts "\n", "You won!"
   elsif busted?(dealer_hand)
-    puts "You won!"
-  else 
-    puts "Dealer won!"
+    puts "\n", "Dealer busted!You won!"
+  else
+    puts "\n", "Dealer won!"
   end
 end
-      
 
 player_hand = []
 dealer_hand = []
-
 
 deck = initialize_deck
 
@@ -76,28 +80,30 @@ puts "You have: #{player_hand[0][1]} and #{player_hand[1][1]}."
 
 answer = nil
 
-loop do 
+loop do
+  break if answer == 'stay' || busted?(player_hand)
   puts "hit or stay?"
   answer = gets.chomp.strip
-  break if answer == 'stay' || busted?(player_hand) 
+  break if answer == 'stay' || busted?(player_hand)
   player_hand << hit(deck)
-  puts "New Card: #{player_hand.last[1]}"
-  puts "Current total: #{total(player_hand)}"
+  puts "\n", "New Card: #{player_hand.last[1]}"
+  puts "Current total: #{total(player_hand)}", "\n"
 end
 
 player_total = total(player_hand)
 
 if busted?(player_hand)
-  puts "You busted! Dealer wins!"
+  puts "\n", "You busted! Dealer wins!"
 else
-  puts "You're staying put! Dealer's turn:"
+  puts "You're staying put! Dealer's turn:", "\n"
 end
-#binding.pry
-loop do 
-  break if total(dealer_hand) >= 17 || busted?(dealer_hand) 
+
+loop do
+  break if total(dealer_hand) >= 17 || busted?(dealer_hand) ||
+           busted?(player_hand)
   dealer_hand << hit(deck)
-   puts "New Card: #{dealer_hand.last[1]}"
-  puts "Current total: #{total(dealer_hand)}"
+  puts "New Card: #{dealer_hand.last[1]}"
+  puts "Current total: #{total(dealer_hand)}", "\n"
 end
 
 dealer_total = total(dealer_hand)
@@ -109,7 +115,3 @@ determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
 
 puts player_hand.inspect
 puts dealer_hand.inspect
-
-
-
-
