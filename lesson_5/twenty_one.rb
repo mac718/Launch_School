@@ -69,7 +69,9 @@ def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
 end
 
 def display_winner(player_total, dealer_total, player_hand, dealer_hand)
-  result = determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+  result =
+    determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+
   case result
   when 'player'
     puts "\n", "You won!", "\n"
@@ -78,10 +80,9 @@ def display_winner(player_total, dealer_total, player_hand, dealer_hand)
   when 'tie'
     puts "\n", "It's a tie!", "\n"
   else
-    puts "\n", "Dealer won!", "\n" 
+    puts "\n", "Dealer won!", "\n"
   end
 end
-
 
 loop do
   player_hand = []
