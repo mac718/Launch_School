@@ -60,78 +60,76 @@ end
 
 def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
   if player_total > dealer_total && !busted?(player_hand)
-    puts "You won!", "\n"
+    puts "\n", "You won!", "\n"
   elsif busted?(dealer_hand)
-    puts "Dealer busted!You won!", "\n"
+    puts "\n", "Dealer busted!You won!", "\n"
   elsif player_total == dealer_total
-    puts "It's a tie!"
+    puts "\n", "It's a tie!", "\n"
   else
-    puts "Dealer won!", "\n"
+    puts "\n", "Dealer won!", "\n" 
   end
 end
 
-
-
-loop do 
+loop do
   player_hand = []
-dealer_hand = []
+  dealer_hand = []
 
-deck = initialize_deck
+  deck = initialize_deck
 
-puts "Welcome to 21! Press enter to deal cards."
-start_game = gets.chomp.strip until start_game == ''
+  puts "Welcome to 21! Press enter to deal cards."
+  start_game = gets.chomp.strip until start_game == ''
 
-deal_cards(player_hand, dealer_hand, deck)
+  deal_cards(player_hand, dealer_hand, deck)
 
-puts "Dealer has: #{dealer_hand[0][1]} and unknown card."
-puts "You have: #{player_hand[0][1]} and #{player_hand[1][1]}."
+  puts "Dealer has: #{dealer_hand[0][1]} and unknown card."
+  puts "You have: #{player_hand[0][1]} and #{player_hand[1][1]}."
 
-answer = nil
+  answer = nil
 
-loop do
-  puts "(H)it or (s)tay?"
-  answer = gets.chomp.strip.downcase
-  until ['stay', 's', 'hit', 'h'].include? answer
-    puts "Sorry, that's not a valid entry. Hit(h) or stay(s)?"
+  loop do
+    puts "(H)it or (s)tay?"
     answer = gets.chomp.strip.downcase
+    until ['stay', 's', 'hit', 'h'].include? answer
+      puts "Sorry, that's not a valid entry. Hit(h) or stay(s)?"
+      answer = gets.chomp.strip.downcase
+    end
+    break if ['s', 'stay'].include?(answer)
+
+    player_hand << hit(deck)
+
+    puts "\n", "New Card: #{player_hand.last[1]}"
+    puts "Current total: #{total(player_hand)}", "\n"
+    break if busted?(player_hand)
   end
-  break if ['s', 'stay'].include?(answer)
 
-  player_hand << hit(deck)
+  player_total = total(player_hand)
 
-  puts "\n", "New Card: #{player_hand.last[1]}"
-  puts "Current total: #{total(player_hand)}", "\n"
-  break if busted?(player_hand)
-end
+  if busted?(player_hand)
+    puts "\n", "You busted! Dealer wins!"
+  else
+    puts "\n", "You're staying put! Dealer's turn:", "\n"
+  end
 
-player_total = total(player_hand)
+  loop do
+    break if total(dealer_hand) >= 17 || busted?(dealer_hand) ||
+             busted?(player_hand)
 
-if busted?(player_hand)
-  puts "\n", "You busted! Dealer wins!"
-else
-  puts "\n", "You're staying put! Dealer's turn:", "\n"
-end
+    dealer_hand << hit(deck)
 
-loop do
-  break if total(dealer_hand) >= 17 || busted?(dealer_hand) ||
-           busted?(player_hand)
+    puts "New Card: #{dealer_hand.last[1]}"
+    puts "Current total: #{total(dealer_hand)}", "\n"
+  end
 
-  dealer_hand << hit(deck)
+  puts "Dealer is staying." if !busted?(dealer_hand) && !busted?(player_hand)
 
-  puts "New Card: #{dealer_hand.last[1]}"
-  puts "Current total: #{total(dealer_hand)}", "\n"
-end
+  dealer_total = total(dealer_hand)
 
-puts "Dealer is staying." if !busted?(dealer_hand) && !busted?(player_hand)
+  puts "Your total: #{player_total}"
+  puts "Dealer's total: #{dealer_total}"
 
-dealer_total = total(dealer_hand)
+  determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
 
-determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
-
-puts "Your total: #{player_total}"
-puts "Dealer's total: #{dealer_total}"
-
-puts "Play again? (y or n)"
+  puts "Play again? (y or n)"
   answer = gets.chomp.strip
   until ['y', 'n'].include?(answer.downcase)
     puts("Enter Y to play again or N to exit.")
@@ -139,7 +137,6 @@ puts "Play again? (y or n)"
   end
 
   break if answer.downcase == 'n'
-
 end
 
 puts "Thanks for playing 21!"
