@@ -57,6 +57,10 @@ def hit(deck)
   card
 end
 
+def display_new_card(hand)
+  puts "\n", "New Card: #{hand.last[1]}"
+  puts "Current total: #{total(hand)}", "\n"
+end
 def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
   if player_total > dealer_total && !busted?(player_hand)
     'player'
@@ -83,19 +87,25 @@ def display_winner(player_total, dealer_total, player_hand, dealer_hand)
   end
 end
 
+def clear_screen
+  system('clear') || system('cls')
+end
+
+puts "Welcome to 21!", "\n"
+
 loop do
   player_hand = []
   dealer_hand = []
 
   deck = initialize_deck
 
-  puts "Welcome to 21! Press enter to deal cards."
-  start_game = gets.chomp.strip until start_game == ''
+  #start_game = gets.chomp.strip until start_game == ''
 
   deal_cards(player_hand, dealer_hand, deck)
 
   puts "Dealer has: #{dealer_hand[0][1]} and unknown card."
   puts "You have: #{player_hand[0][1]} and #{player_hand[1][1]}."
+  puts "Current total: #{total(player_hand)}", "\n"
 
   answer = nil
 
@@ -103,22 +113,22 @@ loop do
     puts "(H)it or (s)tay?"
     answer = gets.chomp.strip.downcase
     until ['stay', 's', 'hit', 'h'].include? answer
-      puts "Sorry, that's not a valid entry. Hit(h) or stay(s)?"
+      puts "Sorry, that's not a valid entry. (H)it(or (s)tay?"
       answer = gets.chomp.strip.downcase
     end
     break if ['s', 'stay'].include?(answer)
 
     player_hand << hit(deck)
 
-    puts "\n", "New Card: #{player_hand.last[1]}"
-    puts "Current total: #{total(player_hand)}", "\n"
+    display_new_card(player_hand)
+
     break if busted?(player_hand)
   end
 
   player_total = total(player_hand)
 
   if busted?(player_hand)
-    puts "\n", "You busted! Dealer wins!"
+    puts "You busted!"
   else
     puts "\n", "You're staying put! Dealer's turn:", "\n"
   end
@@ -129,8 +139,7 @@ loop do
 
     dealer_hand << hit(deck)
 
-    puts "New Card: #{dealer_hand.last[1]}"
-    puts "Current total: #{total(dealer_hand)}", "\n"
+    display_new_card(dealer_hand)
   end
 
   puts "Dealer is staying." if !busted?(dealer_hand) && !busted?(player_hand)
@@ -150,6 +159,8 @@ loop do
   end
 
   break if answer.downcase == 'n'
+
+  clear_screen
 end
 
 puts "Thanks for playing 21!"
