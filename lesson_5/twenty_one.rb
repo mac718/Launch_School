@@ -60,18 +60,26 @@ end
 
 def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
   if player_total > dealer_total && !busted?(player_hand)
-    puts "\n", "You won!"
+    puts "You won!", "\n"
   elsif busted?(dealer_hand)
-    puts "\n", "Dealer busted!You won!"
+    puts "Dealer busted!You won!", "\n"
+  elsif player_total == dealer_total
+    puts "It's a tie!"
   else
-    puts "\n", "Dealer won!"
+    puts "Dealer won!", "\n"
   end
 end
 
-player_hand = []
+
+
+loop do 
+  player_hand = []
 dealer_hand = []
 
 deck = initialize_deck
+
+puts "Welcome to 21! Press enter to deal cards."
+start_game = gets.chomp.strip until start_game == ''
 
 deal_cards(player_hand, dealer_hand, deck)
 
@@ -81,13 +89,19 @@ puts "You have: #{player_hand[0][1]} and #{player_hand[1][1]}."
 answer = nil
 
 loop do
-  break if answer == 'stay' || busted?(player_hand)
-  puts "hit or stay?"
-  answer = gets.chomp.strip
-  break if answer == 'stay' || busted?(player_hand)
+  puts "(H)it or (s)tay?"
+  answer = gets.chomp.strip.downcase
+  until ['stay', 's', 'hit', 'h'].include? answer
+    puts "Sorry, that's not a valid entry. Hit(h) or stay(s)?"
+    answer = gets.chomp.strip.downcase
+  end
+  break if ['s', 'stay'].include?(answer)
+
   player_hand << hit(deck)
+
   puts "\n", "New Card: #{player_hand.last[1]}"
   puts "Current total: #{total(player_hand)}", "\n"
+  break if busted?(player_hand)
 end
 
 player_total = total(player_hand)
@@ -95,23 +109,37 @@ player_total = total(player_hand)
 if busted?(player_hand)
   puts "\n", "You busted! Dealer wins!"
 else
-  puts "You're staying put! Dealer's turn:", "\n"
+  puts "\n", "You're staying put! Dealer's turn:", "\n"
 end
 
 loop do
   break if total(dealer_hand) >= 17 || busted?(dealer_hand) ||
            busted?(player_hand)
+
   dealer_hand << hit(deck)
+
   puts "New Card: #{dealer_hand.last[1]}"
   puts "Current total: #{total(dealer_hand)}", "\n"
 end
 
+puts "Dealer is staying." if !busted?(dealer_hand) && !busted?(player_hand)
+
 dealer_total = total(dealer_hand)
+
+determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
 
 puts "Your total: #{player_total}"
 puts "Dealer's total: #{dealer_total}"
 
-determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+puts "Play again? (y or n)"
+  answer = gets.chomp.strip
+  until ['y', 'n'].include?(answer.downcase)
+    puts("Enter Y to play again or N to exit.")
+    answer = gets.chomp.strip
+  end
 
-puts player_hand.inspect
-puts dealer_hand.inspect
+  break if answer.downcase == 'n'
+
+end
+
+puts "Thanks for playing 21!"
