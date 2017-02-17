@@ -60,15 +60,28 @@ end
 
 def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
   if player_total > dealer_total && !busted?(player_hand)
-    puts "\n", "You won!", "\n"
+    'player'
   elsif busted?(dealer_hand)
-    puts "\n", "Dealer busted!You won!", "\n"
+    'dealer busted'
   elsif player_total == dealer_total
+    'tie'
+  end
+end
+
+def display_winner(player_total, dealer_total, player_hand, dealer_hand)
+  result = determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+  case result
+  when 'player'
+    puts "\n", "You won!", "\n"
+  when 'dealer busted'
+    puts "\n", "Dealer busted!You won!", "\n"
+  when 'tie'
     puts "\n", "It's a tie!", "\n"
   else
     puts "\n", "Dealer won!", "\n" 
   end
 end
+
 
 loop do
   player_hand = []
@@ -127,7 +140,7 @@ loop do
   puts "Your total: #{player_total}"
   puts "Dealer's total: #{dealer_total}"
 
-  determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+  display_winner(player_total, dealer_total, player_hand, dealer_hand)
 
   puts "Play again? (y or n)"
   answer = gets.chomp.strip
