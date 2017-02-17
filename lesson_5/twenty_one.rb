@@ -2,7 +2,6 @@ require 'pry'
 
 SUITS = ['C', 'S', 'H', 'D'].freeze
 CARDS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'].freeze
-FACECARD = 10
 
 def initialize_deck
   deck = []
