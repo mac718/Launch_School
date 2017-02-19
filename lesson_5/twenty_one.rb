@@ -19,16 +19,6 @@ def deal_cards(player_hand, dealer_hand, deck)
   2.times { dealer_hand << hit(deck) }
 end
 
-def ace_equals_one(hand)
-  count = 0
-  hand.each do |card|
-    if card.include?('Ace')
-      count += 1
-    end
-  end
-  count
-end
-
 def total(hand)
   total = 0
   values = hand.map{|card| card[1]}
@@ -52,9 +42,7 @@ def busted?(hand)
 end
 
 def hit(deck)
-  card = deck.sample
-  deck.delete(card)
-  card
+  card = deck.shuffle.pop
 end
 
 def display_new_card(hand)
