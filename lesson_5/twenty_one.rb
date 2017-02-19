@@ -31,20 +31,20 @@ end
 
 def total(hand)
   total = 0
-  hand.each do |card|
-    if ['Jack', 'Queen', 'King'].include?(card[1])
+  values = hand.map{|card| card[1]}
+  values.each do |value|
+    if ['Jack', 'Queen', 'King'].include?(value)
       total += 10
-    elsif card[1] == 'Ace'
+    elsif value == 'Ace'
       total += 11
     else
-      total += card[1]
+      total += value
     end
   end
-  count = 0
-  if total > 21
-    count = ace_equals_one(hand)
+  values.select {|value| value == 'Ace'}.count.times do 
+    total -= 10 if total > 21
   end
-  total - (count * 10)
+  total
 end
 
 def busted?(hand)
@@ -61,6 +61,7 @@ def display_new_card(hand)
   puts "\n", "New Card: #{hand.last[1]}"
   puts "Current total: #{total(hand)}", "\n"
 end
+
 def determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
   if player_total > dealer_total && !busted?(player_hand)
     'player'
