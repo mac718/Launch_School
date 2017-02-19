@@ -21,7 +21,7 @@ end
 
 def total(hand)
   total = 0
-  values = hand.map{|card| card[1]}
+  values = hand.map { |card| card[1] }
   values.each do |value|
     if ['Jack', 'Queen', 'King'].include?(value)
       total += 10
@@ -31,7 +31,7 @@ def total(hand)
       total += value
     end
   end
-  values.select {|value| value == 'Ace'}.count.times do 
+  values.select { |value| value == 'Ace' }.count.times do
     total -= 10 if total > 21
   end
   total
@@ -42,7 +42,7 @@ def busted?(hand)
 end
 
 def hit(deck)
-  card = deck.shuffle.pop
+  deck.shuffle.pop
 end
 
 def display_new_card(hand)
@@ -87,8 +87,6 @@ loop do
   dealer_hand = []
 
   deck = initialize_deck
-
-  #start_game = gets.chomp.strip until start_game == ''
 
   deal_cards(player_hand, dealer_hand, deck)
 
