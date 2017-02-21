@@ -2,6 +2,8 @@ require 'pry'
 
 SUITS = ['C', 'S', 'H', 'D'].freeze
 CARDS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'].freeze
+MAX = 21
+STAY = 17
 
 def initialize_deck
   deck = []
@@ -32,13 +34,13 @@ def total(hand)
     end
   end
   values.select { |value| value == 'Ace' }.count.times do
-    total -= 10 if total > 21
+    total -= 10 if total > MAX
   end
   total
 end
 
 def busted?(hand)
-  total(hand) > 21
+  total(hand) > MAX
 end
 
 def hit(deck)
@@ -80,10 +82,10 @@ def clear_screen
   system('clear') || system('cls')
 end
 
-player_wins = 0 
-dealer_wins = 0 
+player_wins = 0
+dealer_wins = 0
 
-puts "Welcome to 21! First to five wins wins the match!", "\n"
+puts "Welcome to #{MAX}! First to five wins wins the match!", "\n"
 
 loop do
   player_hand = []
@@ -124,7 +126,7 @@ loop do
   end
 
   loop do
-    break if total(dealer_hand) >= 17 || busted?(dealer_hand) ||
+    break if total(dealer_hand) >= STAY || busted?(dealer_hand) ||
              busted?(player_hand)
 
     dealer_hand << hit(deck)
@@ -141,15 +143,16 @@ loop do
 
   display_winner(player_total, dealer_total, player_hand, dealer_hand)
 
-  game_result = determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
-  
+  game_result =
+    determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+
   if game_result == 'player' || game_result == 'dealer busted'
-    player_wins += 1 
+    player_wins += 1
   elsif game_result == 'tie'
     nil
   else
-    dealer_wins += 1 
-  end 
+    dealer_wins += 1
+  end
 
   puts "\n", "Player wins: #{player_wins}"
   puts "Dealer wins: #{dealer_wins}", "\n"
@@ -177,6 +180,5 @@ elsif dealer_wins == 5
   puts "Dealer wins the match!"
   puts "======================"
 end
-    
 
 puts "\n", "Thanks for playing 21!"
