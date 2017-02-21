@@ -83,7 +83,7 @@ end
 player_wins = 0 
 dealer_wins = 0 
 
-puts "Welcome to 21!", "\n"
+puts "Welcome to 21! First to five wins wins the match!", "\n"
 
 loop do
   player_hand = []
@@ -151,6 +151,9 @@ loop do
     dealer_wins += 1 
   end 
 
+  puts "\n", "Player wins: #{player_wins}"
+  puts "Dealer wins: #{dealer_wins}", "\n"
+
   break if player_wins == 5 || dealer_wins == 5
 
   puts "Play again? (y or n)"
@@ -165,4 +168,15 @@ loop do
   clear_screen
 end
 
-puts "Thanks for playing 21!"
+if player_wins == 5
+  puts "======================"
+  puts "Player wins the match!"
+  puts "======================"
+elsif dealer_wins == 5
+  puts "======================"
+  puts "Dealer wins the match!"
+  puts "======================"
+end
+    
+
+puts "\n", "Thanks for playing 21!"
