@@ -80,6 +80,9 @@ def clear_screen
   system('clear') || system('cls')
 end
 
+player_wins = 0 
+dealer_wins = 0 
+
 puts "Welcome to 21!", "\n"
 
 loop do
@@ -137,6 +140,18 @@ loop do
   puts "Dealer's total: #{dealer_total}"
 
   display_winner(player_total, dealer_total, player_hand, dealer_hand)
+
+  game_result = determine_winnner(player_total, dealer_total, player_hand, dealer_hand)
+  
+  if game_result == 'player' || game_result == 'dealer busted'
+    player_wins += 1 
+  elsif game_result == 'tie'
+    nil
+  else
+    dealer_wins += 1 
+  end 
+
+  break if player_wins == 5 || dealer_wins == 5
 
   puts "Play again? (y or n)"
   answer = gets.chomp.strip
