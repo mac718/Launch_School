@@ -5,3 +5,11 @@ def oddities(arr)
   end
   odd_arr
 end
+
+def evenies(arr)
+  even_arr = []
+  arr.each_with_index do |elem, index| 
+    even_arr << elem if index.odd?
+  end
+  even_arr
+end
