@@ -13,3 +13,21 @@ def evenies(arr)
   end
   even_arr
 end
+
+def evenies(arr)
+  even_arr = []
+  index = 0 
+  while index < arr.size 
+    even_arr << arr[index] if index.odd?
+    index += 1 
+  end
+  even_arr
+end
+
+def evenies(arr)
+  even_arr = []
+  arr.size.times do |index|
+    even_arr << arr[index] if index.odd?
+  end
+  even_arr
+end
