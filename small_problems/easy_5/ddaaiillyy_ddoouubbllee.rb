@@ -6,14 +6,11 @@ end
 
 def crunch(str)
   condensed_str = ''
-  counter = 0
+  index = 0
   str.each_char do |char|
-    if counter > 0 && char == str[counter - 1]
-      nil
-    else
-      condensed_str << char 
-    end
-    counter += 1
+     condensed_str << char unless 
+        index > 0 && char == str[index - 1]
+    index += 1
   end
   condensed_str
 end
