@@ -14,3 +14,12 @@ def crunch(str)
   end
   condensed_str
 end
+
+# or
+
+def crunch(str)
+  word_arr = 
+    str.split.map { |word|word.scan(/(.)\1*/).join }
+end
+word_arr.join(' ')
+end
