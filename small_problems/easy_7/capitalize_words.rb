@@ -4,7 +4,7 @@ end
 
 def word_cap(str)
   word_arr = str.split
-  word_arr.map do |word|
+  word_arr.map! do |word|
     word[0].upcase +
     word[1..-1].downcase
   end
