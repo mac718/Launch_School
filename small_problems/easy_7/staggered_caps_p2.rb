@@ -1,13 +1,12 @@
 def staggered_case(str, first_char = true)
   staggered_str = ''
-  switch = true
   str.chars.each do |char|
-    if switch && char =~ /[A-z]/
+    if first_char && char =~ /[A-z]/
       staggered_str << char.upcase
-      switch = !switch
-    elsif !switch && char =~ /[A-z]/
+      first_char = !first_char
+    elsif !first_char && char =~ /[A-z]/
       staggered_str << char.downcase
-      switch = !switch
+      first_char = !first_char
     else
       staggered_str << char 
     end 
