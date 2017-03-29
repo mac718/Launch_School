@@ -12,15 +12,11 @@ end
 
 def staggered_case(str, first_char = true)
   staggered_str = ''
-  if first_cap
-    str.chars.each_with_index do |char, index|
-      staggered_str << char.upcase if index.even?
-      staggered_str << char.downcase if index.odd?
-    end 
-  else
-    str.chars.each_with_index do |char, index|
-      staggered_str << char.downcase if index.even?
-      staggered_str << char.upcase if index.odd?
+  str.chars.each_with_index do |char, index|
+    if first_cap
+      index.even? ? staggered_str << char.upcase : staggered_str << char.downcase
+    else
+      index.odd? ? staggered_str << char.upcase : staggered_str << char.downcase
     end 
   end
   staggered_str
