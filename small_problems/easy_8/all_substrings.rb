@@ -4,7 +4,6 @@ def substrings(str)
   loop do
     end_index = start_index
     loop do
-      p end_index
       substring_arr << str[start_index..end_index]
       end_index += 1
       break if  end_index == str.length
