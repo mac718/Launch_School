@@ -7,17 +7,30 @@ flintstones.each_with_index do |name, index|
 end 
 name_hash
 
+# or 
+
+index = 0
+
+flintstones.each_with_object({}) do |name, hsh|
+  hsh[name] = index
+  index += 1 
+end 
+
 #Exercise 2
 ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 5843, "Eddie" => 10, "Marilyn" => 22, "Spot" => 237 }
 
 total_age = 0
-ages.each {|_, value| total_age += value}
+ages.each { |_, value| total_age += value }
 total
 
 #Exercise 3
 ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 402, "Eddie" => 10 }
 
-ages.delete_if{|_, age| age >= 100}
+ages.delete_if{ |_, age| age >= 100 }
+
+# or 
+
+ages.reject { |_, age| age >= 100 }
 
 #Exercise 4
 ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 5843, "Eddie" => 10, "Marilyn" => 22, "Spot" => 237 }
@@ -27,13 +40,13 @@ ages.values.min
 #Exercise 5
 flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
 
-flintstones.index{|first_letters| first_letters =~ /Be/}
+flintstones.index{ |first_letters| first_letters =~ /Be/ }
 
 #Exercise 6
 flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
 
 flintstones.map! do |name|
-  name = name[0..2]
+  name[0..2]
 end
 
 #Exercise 7 
@@ -69,6 +82,8 @@ numbers.each do |number|
 end
 #1 
 #3
+# The array is being altered while the counter built into the #each method continues to increment. Therefore, the index 
+# targeted by each no longer corresponds to the element corresponding to that index in the original array.
 
 numbers = [1, 2, 3, 4]
 numbers.each do |number|
