@@ -7,6 +7,19 @@ def halvsies(arr)
   split_arr
 end
 
+# or
+
+def halvsies(arr)
+  if arr.length.even?
+    first_half = arr[0, arr.length / 2]
+    second_half = arr[arr.length / 2, arr.length / 2]
+  else 
+    first_half = arr[0, (arr.length / 2) + 1]
+    second_half = arr[(arr.length / 2) + 1, arr.length / 2]
+  end
+  [first_half, second_half]
+end
+
 # or this monstrosity
 
 def halvsies(arr)

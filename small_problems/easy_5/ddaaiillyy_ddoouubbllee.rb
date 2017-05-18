@@ -23,3 +23,19 @@ def crunch(str)
 end
 word_arr.join(' ')
 end
+
+# or 
+
+def crunch(str)
+  crunched_str = ''
+  char_arr = str.chars
+  index = 1 
+  loop do 
+    if char_arr[index] != char_arr[index-1]
+      crunched_str << char_arr[index-1]
+    end 
+    index += 1
+    break if index > str.length
+  end
+  crunched_str
+end

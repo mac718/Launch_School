@@ -13,3 +13,16 @@ def word_sizes(str)
   word_lengths
 end
 
+# or 
+
+def word_sizes(str)
+  word_size_count = Hash.new(0)
+  word_arr = str.split 
+  
+  word_arr.each do |word|
+    word = word.gsub(/\W+/, '')
+    word_size_count[word.length] += 1 
+  end 
+  
+  word_size_count
+end
