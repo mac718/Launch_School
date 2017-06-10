@@ -9,5 +9,3 @@ def fibonacci(nth)
   end 
   fib_nums[nth-1]
 end
-
-p fibonacci(100_001)

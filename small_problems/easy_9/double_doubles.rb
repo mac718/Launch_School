@@ -12,3 +12,16 @@ def twice(int)
     int * 2 
   end
 end
+
+# or 
+
+def twice(number)
+  number_str = number.to_s 
+  if number_str.length.even?
+    if number_str[0..((number_str.length / 2) - 1)] == 
+        number_str[((number_str.length / 2))..-1]
+      return number
+    end 
+  end 
+  number * 2 
+end

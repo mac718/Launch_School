@@ -21,3 +21,18 @@ def max_rotation(num)
   end 
   num
 end
+
+# FE 
+
+def max_rotation(num)
+  char_arr = num.to_s.chars
+  beg_index = 1 
+  rotated_digit_index = 0
+  loop do 
+    char_arr[rotated_digit_index..-1] = char_arr[beg_index..-1] + [char_arr[rotated_digit_index]]
+    beg_index += 1 
+    rotated_digit_index += 1 
+    break if beg_index > char_arr.length 
+  end 
+  char_arr.join.to_i
+end
